@@ -1,0 +1,6 @@
+com\scutsehm\openplatform\kubernetes\KubernetesManagerTest$1.class
+com\scutsehm\openplatform\OpenPlatformApplicationTests.class
+com\scutsehm\openplatform\kubernetes\JobManagerTest.class
+com\scutsehm\openplatform\dao\repository\TaskLogRepositoryTest.class
+com\scutsehm\openplatform\kubernetes\KubernetesManagerTest.class
+com\scutsehm\openplatform\dao\repository\ProcessModelTaskRepositoryTest.class

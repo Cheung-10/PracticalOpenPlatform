@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "kubernetes",
+      "type": "com.scutsehm.openplatform.kubernetes.KubernetesConfig",
+      "sourceType": "com.scutsehm.openplatform.kubernetes.KubernetesConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "kubernetes.ca-crt",
+      "type": "org.springframework.core.io.Resource",
+      "description": "ca-crt",
+      "sourceType": "com.scutsehm.openplatform.kubernetes.KubernetesConfig"
+    },
+    {
+      "name": "kubernetes.client-crt",
+      "type": "org.springframework.core.io.Resource",
+      "description": "crt",
+      "sourceType": "com.scutsehm.openplatform.kubernetes.KubernetesConfig"
+    },
+    {
+      "name": "kubernetes.client-key",
+      "type": "org.springframework.core.io.Resource",
+      "description": "client-key",
+      "sourceType": "com.scutsehm.openplatform.kubernetes.KubernetesConfig"
+    },
+    {
+      "name": "kubernetes.token",
+      "type": "java.lang.String",
+      "description": "token",
+      "sourceType": "com.scutsehm.openplatform.kubernetes.KubernetesConfig"
+    },
+    {
+      "name": "kubernetes.url",
+      "type": "java.lang.String",
+      "description": "master节点url",
+      "sourceType": "com.scutsehm.openplatform.kubernetes.KubernetesConfig"
+    }
+  ],
+  "hints": []
+}

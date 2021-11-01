@@ -1,0 +1,89 @@
+server:
+  port: 9531
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+#  ssl:
+#    key-store: .keystore
+#    key-store-password: ENC(JaIaol/MtUbo3HPkZyr7Vg==)
+
+spring:
+  profiles:
+    active: stg
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  application:
+    name: OpenPlatform
+  #数据库连接信息
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///open_platform?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: remote
+    password: scut2021
+    type: com.alibaba.druid.pool.DruidDataSource
+  #rabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+#k8s master
+kubernetes:
+  url: https://49.4.115.220:6443/
+  client-crt=classpath: k8s/apiserver-kubelet-client.crt
+  client-key=classpath: k8s/apiserver-kubelet-client.key
+  ca-crt=classpath: k8s/ca.crt
+  token: eyJhbGciOiJSUzI1NiIsImtpZCI6ImxCS3ZSMDE1aEgtUjVGOEpWZ2pBYWNsZ3ptRWNkanRMQzJiOHlwcV9XRXMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLTcyd2x4Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI3NGMzNzA1Ni1jYWYxLTQxNDQtOTg5Zi04MzdjNTAzM2JhNGYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.WuARimn2jPERqBf2pQe3Lu7hJ8x3tM5BFSQwFII8BKS41skF26rcTPlbWBJ95Z5GqDI4Ay9mpXCskMtgAWNg0TJ9QgBouPoungQJx_ejNtqeks2zLHRcxxXkMbcEYI9QdzdSI5cpMeS59ZQVysk2khJliqBuogzvMr5N_qpgHrkMdksBMEMVIX97kgqOSdiU9tMooh3tThwawyrzp-dlJH_Ov8FpNLx3oPdSETbWsfNC7WYonRhRhNZ7n21Pa5R4bbymJpt2NSOxpD16t6qj6__V8Ro5Lj0LdPoap3zD82qCmBQoVfUf4vqb3RnN9z-wJfO1tCgY7DNrmt_sjjcjlA
+
+
+#mybatis
+mybatis:
+  # 扫描映射的文件
+  mapper-locations: classpath:mapper/*.xml
+  # 配置别名扫描的包
+  type-aliases-package: com.scutsehm.openplatform.POJO.entity
+  configuration:
+    # 开启驼峰映射
+    map-underscore-to-camel-case: true
+
+#logback日志配置
+logging:
+  config: classpath:logback.xml
+  level:
+    com.scutsehm.openplatform.mapper: DEBUG
+
+
+
+jasypt:
+  encryptor:
+    password: openplatform2021 #加密/解密密钥
+
+open-platform:
+  file-space:
+    private: "/Private"
+    data: "/Data"
+    share: "/Share"
+    process-model: "/ProcessModel"
+    train-model: "/TrainModel"
+  filepath:
+    base: "/home/remote/openplatform/nfsboot"
+    private-space: "${open-platform.filepath.base}${open-platform.file-space.private}"
+    data-space: "${open-platform.filepath.base}${open-platform.file-space.data}"
+    share-space: "${open-platform.filepath.base}${open-platform.file-space.share}"
+    process-model-space: "${open-platform.filepath.base}${open-platform.file-space.process-model}"
+    train-model-space: "${open-platform.filepath.base}${open-platform.file-space.train-model}"
+  nfs:
+    server: "192.168.2.184"
+    root: "/home/nfsboot"
+    mount-point:
+      private: "${open-platform.nfs.root}${open-platform.file-space.private}"
+      data: "${open-platform.nfs.root}${open-platform.file-space.data}"
+      share: "${open-platform.nfs.root}${open-platform.file-space.share}"
+      process-model: "${open-platform.nfs.root}${open-platform.file-space.process-model}"
+      train-model: "${open-platform.nfs.root}${open-platform.file-space.train-model}"
+

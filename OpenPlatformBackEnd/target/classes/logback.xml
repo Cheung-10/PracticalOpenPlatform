@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="10 seconds">
+    <contextName>logback</contextName>
+
+    <!--日志级别包括：TRACE、DEBUG、INFO、WARN 和 ERROR ，TRACE < DEBUG < INFO < WARN < ERROR-->
+    <!--<logger name="xxx" level="yyy" /> 即：设置xxx包下/xxx类的日志级别为yyy,例如设置成ERROR则该包下不打印比ERROR级别小的日志-->
+    <logger name="org.springframework" level="WARN" />
+    <logger name="com.zaxxer.hikari.HikariConfig" level="ERROR"/>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
+    <logger name="org.mybatis.spring.SqlSessionUtils" level="ERROR"/>
+    <logger name="org.mybatis.spring.SqlSessionUtils" level="ERROR"/>
+    <logger name="com.ulisesbocchio.jasyptspringboot.configuration" level="ERROR"/>
+
+    <!--相当于定义一个变量，与JSP的<c:set/>标签类似，通过${name}取值-->
+    <property name="path" value="logs"></property>
+    <property name="maxHistory" value="30"/>
+    <property name="maxFileSize" value="100MB"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!--设置控制台的打印级别-->
+            <level>info</level>
+        </filter>
+        <encoder>
+            <!--设置控制台日志的打印内容
+                例如：“2019-05-19 23:52:01,199 DEBUG [scheduling-1] o.s.jdbc.datasource.DataSourceUtils [DataSourceUtils.java : 114] Fetching JDBC Connection from DataSource”
+                下面的appender标签同理，只不过这个时控制台，下面的是各自的日志文件内容
+            -->
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="debug_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/log-debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <!--可以将同一天的文件，归档到一个文件夹下，以达到一天日志一个文件夹的效果-->
+            <!--
+                %d{yyyy-MM-dd}：年月日 ，
+                %i：日志文件大小超过之后（或别的原因）新建一个文件时，用以区分，例如log-debug-2019-05-29-1、log-debug-2019-05-29-2
+          	-->
+            <fileNamePattern>${path}/log-%d{yyyy-MM-dd}/log-debug-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="info_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/log-info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${path}/log-%d{yyyy-MM-dd}/log-info-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="warn_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/log-warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${path}/log-%d{yyyy-MM-dd}/log-warn-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="error_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/log-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${path}/log-%d{yyyy-MM-dd}/log-error-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root>
+        <!--<level value="DEBUG"/>-->
+        <!--root标签要引入appender，该appender标签中的配置才会生效-->
+        <appender-ref ref="console"/>
+        <appender-ref ref="debug_file"/>
+        <appender-ref ref="info_file"/>
+        <appender-ref ref="warn_file"/>
+        <appender-ref ref="error_file"/>
+    </root>
+
+</configuration>

@@ -1,0 +1,11 @@
+open-platform:
+  filepath:
+    base: "/home/hm/cheungilin/nfsboot/"
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://116.56.129.27:9521/OpenPlatform?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: remote
+    password: scut2021
+    type: com.alibaba.druid.pool.DruidDataSource

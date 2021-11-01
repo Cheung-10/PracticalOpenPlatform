@@ -1,0 +1,50 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scutsehm.openplatform.dao.mapper.UserMapper">
+
+    <!--       List<User> findAll();-->
+    <select id="findAll" resultType="User">
+        select * from user
+    </select>
+
+    <!--    User findByUsername(String username);-->
+    <select id="findByUsername" resultType="User">
+        select * from user where username=#{username}
+    </select>
+
+    <!--        User findById(long id);-->
+    <select id="findById" resultType="User">
+        select * from user where id=#{id}
+    </select>
+
+    <!--      Long add(User user);-->
+    <insert id="add" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user
+        (username, password)
+        values
+        (#{username},#{password})
+    </insert>
+
+    <!--        boolean update(User user);-->
+    <update id="update" parameterType="User">
+        update user
+        set
+        username=#{username},password=#{password}
+        where id=#{id}
+    </update>
+
+    <!--    Long deleteById(Integer id);-->
+    <delete id="deleteById">
+        delete from user where id=#{id}
+    </delete>
+
+
+    <!--    List<Role> getUserRoleByUserId(long userId);-->
+    <select id="getUserRoleByUserId" resultType="Role">
+        select * from role r, user_role ur
+        where r.id = ur.role_id and ur.user_id = #{userId}
+    </select>
+
+</mapper>
